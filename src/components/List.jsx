@@ -6,11 +6,10 @@ function List({s, name, q, price}) {
   return (
     <>
         <Container>
-            sno: {s} < br/>
-            Product name: {name} < br/>
-            Current Quantity: {q} < br/>
-            Current Price: {price} < br/>
-
+            Sno : {s} < br/>
+            Name : {name} < br/>
+            Quantity : {q} < br/>
+            Price : {price} < br/>
         </Container>
     </>
   )

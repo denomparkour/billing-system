@@ -13,33 +13,44 @@ function App() {
   const [items,setItems] = useState([
     { 
       "sno": 0,
-      "name": "sugar",
+      "name": "Sugar",
       "price": 20,
       "quantity": 0
     },
 ])
-const [sno, setsno] = useState(items.count)
+const [seno, setseno] = useState(items.length)
   function increment(price, sno) {
-    setTotal(total + price)
-    // items[sno].quantity = items[sno].quantity + 1
-    console.log(items.count) 
+    setTotal(total + parseInt(price))
+    const updatedValues = [...items]
+    updatedValues[sno].quantity = updatedValues[sno].quantity + 1 
   }
-  function decrement(price) {
+  function decrement(price,sno) {
     if(total == 0) {
-      alert("Cart is already empty")
+      alert("Items are already empty")
     } else {
-      setTotal(total - price)
+      setTotal(total -  parseInt(price))
+      const updatedValues = [...items]
+      updatedValues[sno].quantity = updatedValues[sno].quantity - 1 
     }
   }
   function adder() {
-
-    setItems(items => [...items, {
-      "sno" : 1,
-      "name": name,
-      "price": price,
-      "quantity": quantity
-    }])
-    console.log(items)
+    if (name == "" || price==0 || quantity == 0) {
+      alert("Please properly enter the values")
+    }else {
+      setItems(items => [...items, {
+        "sno" : seno,
+        "name": name,
+        "price": price,
+        "quantity": parseInt(quantity)
+      }])
+      if (seno == 0 ) {
+        setseno(2)
+      } else {
+        setseno(seno + 1)
+      }
+      setTotal(parseInt(quantity) * parseInt(price))
+    }
+    
   }
   
   return (
@@ -47,21 +58,20 @@ const [sno, setsno] = useState(items.count)
     <Header>
       Billing Management
     </Header>
-      Available Items
-      < br/>
+    Add Items
       < br/>
       <div> 
-        <label>Item Name : </label>
-        <input onChange={e => setName(e.target.value)}/> < br/>
-        <label>Item quantity : </label>
-        <input onChange={e => setQ(e.target.value)}/> < br/>
-        <label>Item Price : </label>
-        <input onChange={e => setPrice(e.target.value)}/> < br/>
+        <input placeholder="Item Name" onChange={e => setName(e.target.value)}/> < br/>
+        <input placeholder="Item quantity" onChange={e => setQ(e.target.value)}/> < br/>
+        <input placeholder="Item Price" onChange={e => setPrice(e.target.value)}/> < br/>
+        < br/>
         <AddBtn onClick={adder}>
           Add Item
         </AddBtn>
       </div>
       < br />
+      Available Items
+      < br/>
       {items.map((i) => {
         return(
           <>
@@ -83,12 +93,13 @@ const Header = styled.h1`
 color: "white";
 `
 const AddBtn = styled.button`
-width: 50px;
+width: auto;
 height: 45px;
 background-color: #242424;
 color: "white";
 margin-right: 5px;
 margin-bottom: 5px;
+border-radius: 7px
 `
 const RemoveBtn = styled.button`
 width: auto;
@@ -96,4 +107,5 @@ height: 45px;
 background-color: #242424;
 color: "white";
 margin-bottom: 5px;
+border-radius: 7px
 `
